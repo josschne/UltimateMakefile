@@ -39,10 +39,10 @@ def installPrereqs(instance, repo)
 		puts "Successfully connected over SSH!"
 		puts session.exec!("export DEBIAN_FRONTEND=noninteractive")
 		puts session.exec!("sudo apt-get update -y")
-		puts session.exec!("sudo apt-get install -y git build-essential")
+		puts session.exec!("sudo apt-get install -y rake git build-essential")
 		puts session.exec!("git clone https://github.com/josschne/UltimateMakefile.git")
-		puts session.exec!("git clone #{repo}")
-		puts session.exec!("cd #{`basename #{repo}`} && ../UltimateMakefile/install.sh && rake")
+		puts session.exec!("rm -rf source; git clone #{repo} source")
+		puts session.exec!("cd source && ../UltimateMakefile/install.sh && rake")
 	end
 end
 
