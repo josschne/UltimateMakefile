@@ -42,7 +42,7 @@ def installPrereqs(instance, repo)
 		puts session.exec!("sudo apt-get install -y git build-essential")
 		puts session.exec!("git clone https://github.com/josschne/UltimateMakefile.git")
 		puts session.exec!("git clone #{repo}")
-		puts session.exec!("cd #{`basename repo`} && ../UltimateMakefile/install.sh && rake")
+		puts session.exec!("cd #{`basename #{repo}`} && ../UltimateMakefile/install.sh && rake")
 	end
 end
 
