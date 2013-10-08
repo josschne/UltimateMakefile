@@ -17,12 +17,12 @@ def getRandomRepo()
 end
 
 def installPrereqs(repo)
-	shell("export DEBIAN_FRONTEND=noninteractive")
-	shell("sudo apt-get update -y")
-	shell("sudo apt-get install -y cmake rake git build-essential")
-	shell("git clone https://github.com/josschne/UltimateMakefile.git")
-	shell("rm -rf source; git clone #{repo} source")
-	shell("cd source && ../UltimateMakefile/install.sh && rake")
+	system("export DEBIAN_FRONTEND=noninteractive")
+	system("sudo apt-get update -y")
+	system("sudo apt-get install -y cmake rake git build-essential")
+	system("git clone https://github.com/josschne/UltimateMakefile.git")
+	system("rm -rf source; git clone #{repo} source")
+	system("cd source && ../UltimateMakefile/install.sh && rake")
 end
 
 randomRepo = getRandomRepo
