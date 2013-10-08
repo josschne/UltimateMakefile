@@ -27,7 +27,19 @@ task :detect_build_command do
 		sh "mkdir -p build && cd build && ../configure && make clean && make && make test"
 	elsif File.exists?('Makefile')
 		puts "Found automake build"
-		sh "mkdir -p build && cd build && make clean && make && make test"
+		maketargets = `make -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}'`.split
+		puts "Found make targets: #{maketargets}"
+		build_cmd = []
+		if maketargets.include?("clean")
+			build_cmd << "make clean"
+		end
+		build_cmd << "make"
+		if maketargets.include?("test")
+			build_cmd << "make test"
+		end
+		build_cmd = build_cmd.join(" && ")
+		puts "Build cmd: #{build_cmd}"
+		sh build_cmd
 	elsif File.exists?('SConscript')
 		puts "Found Scons build"
 		sh "scons -c && scons"

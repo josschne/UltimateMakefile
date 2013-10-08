@@ -8,7 +8,8 @@ begin
 def getRandomRepo()
 	randomRepoUrl = ""
 	search = Github::Search.new
-	result = search.repos keyword: '.travis.yml', language: 'c++', sort: 'stars'
+	randomLetter = (rand(26)+10).to_s(36)
+	result = search.repos keyword: randomLetter, language: 'c++', sort: 'stars'
 	if result.repositories.length > 0
 		randomRepoUrl = result.repositories[rand(result.repositories.length)].url
 		puts "Repo: #{randomRepoUrl}"
