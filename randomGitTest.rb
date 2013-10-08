@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'github_api' #Use version 0.10.1 to avoid nokogiri conflicts for now
 
 begin

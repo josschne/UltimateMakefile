@@ -1,1 +1,1 @@
-build-test: ruby randomGitTest.rb
+build-test: bundle exec ruby randomGitTest.rb
