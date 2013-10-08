@@ -6,7 +6,6 @@ require 'iconv'
 
 task :detect_third_party_dependencies do
 	puts "Detect third party dependencies"
-	require 'yaml'
 	Dir['**/*.h', '**/*.cpp'].each do |file|
 		depends_dictionary.each do |signature, lib|
 			if not File.directory?(file)
@@ -28,6 +27,9 @@ task :detect_build_command do
 	elsif File.exists?('configure')
 		puts "Found automake build"
 		sh "mkdir -p build && cd build && ../configure && make clean && make && make test"
+	elsif File.exists?('Makefile')
+		puts "Found automake build"
+		sh "mkdir -p build && cd build && make clean && make && make test"
 	elsif File.exists?('SConscript')
 		puts "Found Scons build"
 		sh "scons -c && scons"

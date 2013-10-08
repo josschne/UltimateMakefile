@@ -7,7 +7,7 @@ begin
 def getRandomRepo()
 	randomRepoUrl = ""
 	search = Github::Search.new
-	result = search.repos keyword: 'a', language: 'c++'
+	result = search.repos keyword: '.travis.yml', language: 'c++', sort: 'stars'
 	if result.repositories.length > 0
 		randomRepoUrl = result.repositories[rand(result.repositories.length)].url
 		puts "Repo: #{randomRepoUrl}"
@@ -39,7 +39,7 @@ def installPrereqs(instance, repo)
 		puts "Successfully connected over SSH!"
 		puts session.exec!("export DEBIAN_FRONTEND=noninteractive")
 		puts session.exec!("sudo apt-get update -y")
-		puts session.exec!("sudo apt-get install -y rake git build-essential")
+		puts session.exec!("sudo apt-get install -y cmake rake git build-essential")
 		puts session.exec!("git clone https://github.com/josschne/UltimateMakefile.git")
 		puts session.exec!("rm -rf source; git clone #{repo} source")
 		puts session.exec!("cd source && ../UltimateMakefile/install.sh && rake")
