@@ -2,15 +2,13 @@ task :default => [:identify]
 
 depends_dictionary = {'SDL.h'=> 'libsdl-dev'}
 
-require 'iconv'
-
 task :detect_third_party_dependencies do
 	puts "Detect third party dependencies"
 	Dir['**/*.h', '**/*.cpp'].each do |file|
 		depends_dictionary.each do |signature, lib|
 			if not File.directory?(file)
-				ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
-				contents = ic.iconv(open(file).read)
+				contents = open(file).read
+				contents = contents.encode('UTF-32', :invalid=>:replace, :replace=>'').encode('UTF-8')
 				if contents.split('\n').grep(/#{signature}/i).length > 0
 					puts "Found dependency #{lib}"
 				end
